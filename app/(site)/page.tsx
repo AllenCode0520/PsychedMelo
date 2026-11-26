@@ -58,14 +58,14 @@ export default async function HomePage() {
         </div>
         <div className="crt-hero__hud">
           <div className="crt-hero__top">
-            <p className="glow-amber">主視窗 · 視覺頻道 01</p>
+            <p className="glow-amber">Now Showing</p>
             <p className="glow-green">
-              艙內時間 <CabinClock />
+              Local Time <CabinClock />
             </p>
           </div>
           <div className="crt-hero__bottom">
             <div className="crt-hero__title">
-              <p className="glow-amber">&gt; 訊號穩定 · 音軌 {pad2(tracks.length)} · 日誌 {pad2(articles.length)}</p>
+              <p className="glow-amber">&gt; {pad2(tracks.length)} tracks · {pad2(articles.length)} notes</p>
               <h1 id="console-title" className="glow-green">
                 {settings.site_name}
                 <span className="blink" aria-hidden="true">
@@ -75,12 +75,12 @@ export default async function HomePage() {
               {settings.tagline && <p className="crt-hero__tagline">{settings.tagline}</p>}
             </div>
             <div className="crt-hero__actions">
-              {queue.length > 0 && <PlayButton tracks={queue} label="開始航行" />}
+              {queue.length > 0 && <PlayButton tracks={queue} label="開始聆聽" />}
               <Link href="/music" className="btn">
-                瀏覽音軌
+                Music
               </Link>
               <Link href="/articles" className="btn">
-                航行日誌
+                Journal
               </Link>
             </div>
           </div>
@@ -89,9 +89,9 @@ export default async function HomePage() {
 
       <section className="section" aria-labelledby="tracks-title">
         <div className="section__head">
-          <h2 id="tracks-title">精選音軌</h2>
+          <h2 id="tracks-title">精選歌曲</h2>
           <Link href="/music" className="section__more">
-            全部音軌 →
+            全部歌曲 →
           </Link>
         </div>
         <TrackList tracks={queue.slice(0, 6)} />
@@ -99,9 +99,9 @@ export default async function HomePage() {
 
       <section className="section" aria-labelledby="logs-title">
         <div className="section__head">
-          <h2 id="logs-title">最新航行日誌</h2>
+          <h2 id="logs-title">最新文章</h2>
           <Link href="/articles" className="section__more">
-            全部日誌 →
+            全部文章 →
           </Link>
         </div>
         <ArticleGrid articles={articles.slice(0, 3)} />

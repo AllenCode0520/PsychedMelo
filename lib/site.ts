@@ -19,8 +19,8 @@ export const SLUG_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export const DEFAULT_SETTINGS: SiteSettings = {
   site_name: 'PsychedMelo',
-  tagline: '在駕駛艙裡，慢慢漂向未知星域',
-  default_description: 'PsychedMelo：迷幻 lofi 音樂與航行日誌。',
+  tagline: 'Lo-fi Music Hi-fi Life',
+  default_description: 'PsychedMelo：迷幻 lofi 音樂與隨筆。',
   about_html: '',
   social_links: [],
   hero_image_url: '',
@@ -32,12 +32,16 @@ export const BRAND_KEY_VISUAL = {
   alt: 'Psychedmelo 主視覺：電腦頭角色和條紋貓站在浮空島上，周圍漂著音符、卡帶與小機器人',
 };
 
-/** 沒有自己封面的頁面，分享到社群時用這張（1200×630）。 */
+/**
+ * 沒有自己封面的頁面，分享到社群時用這張（1200×630）。
+ * 貓鹿放在正中間，LINE / iMessage 裁成正方形時也不會被切到。
+ * 換圖時請改檔名（社群平台會依網址快取舊圖）。
+ */
 export const DEFAULT_OG_IMAGE = {
-  url: '/brand/psychedmelo-og.jpg',
+  url: '/brand/psychedmelo-og-mascot.jpg',
   width: 1200,
   height: 630,
-  alt: BRAND_KEY_VISUAL.alt,
+  alt: 'PsychedMelo 吉祥物：戴著 84 號棒球帽、長著鹿角的粉紅條紋貓鹿',
 };
 
 export function heroImageOf(settings: SiteSettings): string {

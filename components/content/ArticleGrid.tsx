@@ -12,7 +12,7 @@ export function ArticleGrid({
   const Heading = headingLevel;
 
   if (articles.length === 0) {
-    return <p className="empty-note">航行日誌還是空白的，第一篇記錄撰寫中。</p>;
+    return <p className="empty-note">還沒有文章，慢慢寫中。</p>;
   }
 
   return (
@@ -24,7 +24,7 @@ export function ArticleGrid({
               {article.cover_url ? (
                 <img src={article.cover_url} alt="" loading="lazy" />
               ) : (
-                <span className="hud-label">Log entry</span>
+                <span className="hud-label">Journal</span>
               )}
             </div>
             <div className="log-card__body">

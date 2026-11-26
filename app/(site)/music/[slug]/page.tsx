@@ -20,7 +20,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const [track, settings] = await Promise.all([getTrackBySlug(slug), getSettings()]);
-  if (!track) return { title: '找不到這首音軌' };
+  if (!track) return { title: '找不到這首歌' };
 
   const description = track.description
     ? truncate(track.description, 140)
@@ -76,15 +76,15 @@ export default async function TrackPage({ params }: Props) {
     <article className="shell track-page">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(trackLd) }} />
       <nav aria-label="麵包屑" className="crumbs">
-        <Link href="/music">音軌</Link>
+        <Link href="/music">Music</Link>
         <span aria-hidden="true">/</span>
         <span aria-current="page">{track.title}</span>
       </nav>
 
       <div className="track-page__grid">
-        <Viewport source={track} shape="round" label={`${track.title} 的舷窗視覺`} />
+        <Viewport source={track} shape="round" label={`${track.title} 的視覺`} />
         <div className="track-page__info panel panel--rivets">
-          <p className="hud-label">音軌 · Track</p>
+          <p className="hud-label">Track</p>
           <h1>{track.title}</h1>
           <p className="track-page__artist">{track.artist}</p>
           <dl className="readouts readouts--inline">
@@ -93,7 +93,7 @@ export default async function TrackPage({ params }: Props) {
               <dd className="readout">{formatDuration(track.duration_seconds)}</dd>
             </div>
             <div>
-              <dt className="hud-label">登艦日期</dt>
+              <dt className="hud-label">發佈日期</dt>
               <dd>{formatDate(track.created_at)}</dd>
             </div>
           </dl>

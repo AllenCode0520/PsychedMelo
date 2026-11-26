@@ -29,16 +29,16 @@ export function ExpandedViewport() {
   }
 
   return (
-    <div className="overlay" role="dialog" aria-modal="true" aria-label="舷窗模式" onKeyDown={onKeyDown}>
+    <div className="overlay" role="dialog" aria-modal="true" aria-label="全螢幕播放" onKeyDown={onKeyDown}>
       <div className="overlay__inner">
         <div className="overlay__top">
-          <span className="hud-label">舷窗模式 · Viewport</span>
+          <span className="hud-label">全螢幕播放</span>
           <button
             ref={closeRef}
             type="button"
             className="icon-btn"
             onClick={() => player.setExpanded(false)}
-            aria-label="關閉舷窗模式"
+            aria-label="關閉全螢幕"
           >
             <CloseIcon />
           </button>
@@ -48,7 +48,7 @@ export function ExpandedViewport() {
           source={current}
           playing={player.playing}
           shape="round"
-          label={`${current.title} 的舷窗視覺`}
+          label={`${current.title} 的視覺`}
         />
 
         <div className="overlay__meta">

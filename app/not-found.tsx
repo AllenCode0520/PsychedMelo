@@ -4,12 +4,12 @@ export default function NotFound() {
   return (
     <main className="lost">
       <div className="lost__panel panel panel--rivets">
-        <p className="hud-label">警告 · Signal lost</p>
+        <p className="hud-label">404 · Not found</p>
         <span className="readout lost__code">404</span>
-        <h1>訊號遺失</h1>
-        <p>這個座標沒有任何東西，可能已經漂走了。</p>
+        <h1>迷路了</h1>
+        <p>這個頁面不存在，可能已經飄走了。</p>
         <Link href="/" className="btn btn--primary">
-          返回主控台
+          回到首頁
         </Link>
       </div>
     </main>

@@ -478,17 +478,6 @@ input[type='range'] {
   color: var(--amber);
 }
 
-.crew-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 6px 12px;
-  border: 1px solid var(--line);
-  border-radius: 999px;
-  font-size: 13px;
-  white-space: nowrap;
-}
-
 .site-footer {
   margin-top: 80px;
   padding: 28px 0;
@@ -537,10 +526,6 @@ input[type='range'] {
   .main-nav {
     order: 3;
     flex-basis: 100%;
-  }
-
-  .crew-badge {
-    margin-left: auto;
   }
 }
 

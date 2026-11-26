@@ -18,7 +18,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const [article, settings] = await Promise.all([getArticleBySlug(slug), getSettings()]);
-  if (!article) return { title: '找不到這篇日誌' };
+  if (!article) return { title: '找不到這篇文章' };
 
   const title = article.meta_title || article.title;
   const description =
@@ -69,13 +69,13 @@ export default async function ArticlePage({ params }: Props) {
     <article className="shell article">
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd(articleLd) }} />
       <nav aria-label="麵包屑" className="crumbs">
-        <Link href="/articles">航行日誌</Link>
+        <Link href="/articles">Journal</Link>
         <span aria-hidden="true">/</span>
         <span aria-current="page">{article.title}</span>
       </nav>
 
       <header className="article__head">
-        <p className="hud-label">航行日誌 · Log entry</p>
+        <p className="hud-label">Journal</p>
         <h1>{article.title}</h1>
         <div className="article__meta">
           <time dateTime={article.published_at ?? undefined}>{formatDate(article.published_at)}</time>
@@ -93,10 +93,10 @@ export default async function ArticlePage({ params }: Props) {
 
       <footer className="article__foot">
         <Link href="/articles" className="btn">
-          ← 所有日誌
+          ← 所有文章
         </Link>
         <Link href="/music" className="btn btn--primary">
-          邊讀邊聽音軌
+          邊讀邊聽音樂
         </Link>
       </footer>
     </article>

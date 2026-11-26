@@ -11,7 +11,7 @@ export function TrackList({ tracks }: { tracks: PlayerTrack[] }) {
   const { current } = usePlayer();
 
   if (tracks.length === 0) {
-    return <p className="empty-note">貨艙還是空的，第一首音軌即將登艦。</p>;
+    return <p className="empty-note">還沒有歌，第一首快來了。</p>;
   }
 
   return (

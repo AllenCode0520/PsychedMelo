@@ -16,7 +16,7 @@ const REPEAT_LABEL = {
 export function PlayerDock() {
   const player = usePlayer();
   const { current } = player;
-  const status = current ? (player.playing ? '播放中' : '已暫停') : '待命中';
+  const status = current ? (player.playing ? 'Playing' : 'Paused') : 'Idle';
 
   return (
     <>
@@ -31,7 +31,7 @@ export function PlayerDock() {
                   {current.title}
                 </Link>
               ) : (
-                <span className="dock__title is-idle">選一首音軌開始航行</span>
+                <span className="dock__title is-idle">選一首歌開始播放</span>
               )}
               {current && <span className="dock__artist">{current.artist}</span>}
             </div>
@@ -108,7 +108,8 @@ export function PlayerDock() {
               className="icon-btn"
               onClick={() => player.setExpanded(true)}
               disabled={!current}
-              aria-label="開啟舷窗模式"
+              aria-label="全螢幕播放"
+              title="全螢幕播放"
             >
               <ExpandIcon />
             </button>

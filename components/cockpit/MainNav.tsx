@@ -4,10 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 const LINKS = [
-  { href: '/', label: '主控台', code: '01' },
-  { href: '/music', label: '音軌', code: '02' },
-  { href: '/articles', label: '航行日誌', code: '03' },
-  { href: '/about', label: '艦長檔案', code: '04' },
+  { href: '/', label: 'Home', code: '01' },
+  { href: '/music', label: 'Music', code: '02' },
+  { href: '/articles', label: 'Journal', code: '03' },
+  { href: '/about', label: 'About', code: '04' },
 ];
 
 export function MainNav() {

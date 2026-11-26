@@ -13,11 +13,6 @@ export function SiteHeader({ siteName }: { siteName: string }) {
           <span className="brand__name">{siteName}</span>
         </Link>
         <MainNav />
-        <p className="crew-badge">
-          <span className="led led--teal is-on" aria-hidden="true" />
-          <span className="hud-label">乘客</span>
-          <span>訪客</span>
-        </p>
       </div>
     </header>
   );

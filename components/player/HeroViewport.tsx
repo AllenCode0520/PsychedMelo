@@ -16,7 +16,7 @@ export function HeroViewport({ idleImage, idleLabel }: { idleImage: string; idle
         source={current}
         playing={playing}
         shape="screen"
-        label={`${current.title} 的舷窗視覺`}
+        label={`${current.title} 的視覺`}
       />
     );
   }
