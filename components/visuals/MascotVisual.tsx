@@ -182,16 +182,19 @@ export function MascotVisual({ playing = true, className = '' }: { playing?: boo
       </div>
       <svg viewBox="0 0 320 320" className="mv-qs" focusable="false">
         {SPARKLE_QS.map((q, i) => (
-          <text
-            key={i}
-            className={`mv-q mv-q--${i % 4}`}
-            x={q.x}
-            y={q.y}
-            fontSize={q.size}
-            style={{ animationDelay: `${q.delay}s` }}
-          >
-            Q
-          </text>
+          // 位置放在外層 g，文字畫在原點：縮放、旋轉都以 Q 自己為中心（iOS Safari 才不會跑位）
+          <g key={i} transform={`translate(${q.x} ${q.y})`}>
+            <text
+              className={`mv-q mv-q--${i % 4}`}
+              x="0"
+              y="0"
+              dy="0.35em"
+              fontSize={q.size}
+              style={{ animationDelay: `${q.delay}s` }}
+            >
+              Q
+            </text>
+          </g>
         ))}
       </svg>
     </div>
