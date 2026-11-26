@@ -938,7 +938,7 @@ input[type='range'] {
   transform-box: fill-box;
   transform-origin: center;
   opacity: 0;
-  animation: q-twinkle 3.6s ease-in-out infinite;
+  animation: q-twinkle 10s ease-in-out infinite;
 }
 
 .mv-q--0 { fill: #ffd36b; filter: drop-shadow(0 0 4px #ffd36b); }

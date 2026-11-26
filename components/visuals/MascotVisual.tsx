@@ -12,11 +12,11 @@ const BAR_COLORS = ['mv-pink', 'mv-teal', 'mv-amber', 'mv-lavender'];
 /** 貓鹿旁邊一閃一滅的 Q（座標用 320×320 的視覺座標）。 */
 const SPARKLE_QS = [
   { x: 262, y: 70, size: 24, delay: 0 },
-  { x: 56, y: 92, size: 17, delay: 1.1 },
-  { x: 284, y: 198, size: 15, delay: 2.3 },
-  { x: 38, y: 212, size: 21, delay: 0.6 },
-  { x: 238, y: 270, size: 18, delay: 1.7 },
-  { x: 92, y: 280, size: 14, delay: 2.9 },
+  { x: 56, y: 92, size: 17, delay: 3 },
+  { x: 284, y: 198, size: 15, delay: 6.4 },
+  { x: 38, y: 212, size: 21, delay: 1.6 },
+  { x: 238, y: 270, size: 18, delay: 4.8 },
+  { x: 92, y: 280, size: 14, delay: 8 },
 ];
 
 /** 兩隻眼睛在頭像（720×720）上的位置，眼皮蓋在這裡。 */
