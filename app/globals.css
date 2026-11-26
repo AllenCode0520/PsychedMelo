@@ -837,21 +837,160 @@ input[type='range'] {
 
 .mv-face img {
   display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
   user-select: none;
-  /* 跟著高音微微變色，但保留角色原本的樣子 */
-  filter: hue-rotate(calc(var(--high) * 70deg)) saturate(calc(1 + var(--bass) * 0.35));
-  animation: mv-face-drift 22s ease-in-out infinite;
 }
 
 .mv.is-paused .mv-rings,
 .mv.is-paused .mv-spin,
 .mv.is-paused .mv-aura,
 .mv.is-paused .mv-halo,
-.mv.is-paused .mv-face img {
+.mv.is-paused .mascot {
   animation-play-state: paused;
+}
+
+/* 頭像分層：底圖 + 鹿角 + 毛球 + 眼皮。位置用 720×720 原圖座標換成百分比 */
+.mascot {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /* 跟著高音微微變色，但保留角色原本的樣子 */
+  filter: hue-rotate(calc(var(--high) * 70deg)) saturate(calc(1 + var(--bass) * 0.35));
+  animation: mv-face-drift 22s ease-in-out infinite;
+}
+
+.mascot__base,
+.mascot__eyes {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.mascot__part {
+  position: absolute;
+  max-width: none;
+}
+
+/* 鹿角：以根部為軸慢慢擺，低音一來往外甩一下 */
+.mascot__antler--left {
+  left: 10.833%;
+  top: 16.389%;
+  width: 20%;
+  height: 25.833%;
+  transform-origin: 94.4% 88.2%;
+  transform: rotate(calc(var(--bass) * -6deg));
+  animation: antler-sway 3.4s ease-in-out infinite;
+}
+
+.mascot__antler--right {
+  left: 71.111%;
+  top: 16.389%;
+  width: 20.972%;
+  height: 25.694%;
+  transform-origin: 2.6% 88.6%;
+  transform: rotate(calc(var(--bass) * 6deg));
+  animation: antler-sway 3.4s ease-in-out -1.7s infinite reverse;
+}
+
+/* 毛球耳環：掛在耳環圈上像鐘擺 */
+.mascot__pom {
+  left: 13.333%;
+  top: 54.028%;
+  width: 12.778%;
+  height: 13.889%;
+  transform-origin: 87% 3%;
+  transform: rotate(calc(var(--bass) * 8deg));
+  animation: pom-swing 2.2s ease-in-out infinite alternate;
+}
+
+/* 眨眼：大約每 5 秒眨一次，偶爾連眨兩下 */
+.mascot__lid {
+  transform-box: fill-box;
+  transform-origin: 50% 0;
+  scale: 1 0;
+  animation: lid-blink 5.2s ease-in-out infinite;
+}
+
+.mascot__lash {
+  fill: none;
+  stroke: #2a0f2c;
+  stroke-width: 6;
+  stroke-linecap: round;
+  opacity: 0;
+  animation: lash-blink 5.2s ease-in-out infinite;
+}
+
+/* 旁邊一閃一滅的 Q */
+.mv-qs {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.mv-q {
+  font-family: 'Arial Rounded MT Bold', 'Nunito', system-ui, sans-serif;
+  font-weight: 900;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  transform-box: fill-box;
+  transform-origin: center;
+  opacity: 0;
+  animation: q-twinkle 3.6s ease-in-out infinite;
+}
+
+.mv-q--0 { fill: #ffd36b; filter: drop-shadow(0 0 4px #ffd36b); }
+.mv-q--1 { fill: #ff9bd6; filter: drop-shadow(0 0 4px #ff9bd6); }
+.mv-q--2 { fill: #7fe6d2; filter: drop-shadow(0 0 4px #7fe6d2); }
+.mv-q--3 { fill: #fff6d8; filter: drop-shadow(0 0 4px #b7a6ff); }
+
+@keyframes antler-sway {
+  0%, 100% { rotate: -2.5deg; }
+  50% { rotate: 2.5deg; }
+}
+
+@keyframes pom-swing {
+  from { rotate: -9deg; }
+  to { rotate: 9deg; }
+}
+
+@keyframes lid-blink {
+  0%, 88%, 100% { scale: 1 0; }
+  90% { scale: 1 1; }
+  92% { scale: 1 0; }
+  94% { scale: 1 0; }
+  95.5% { scale: 1 1; }
+  97% { scale: 1 0; }
+}
+
+@keyframes lash-blink {
+  0%, 89.4%, 90.6%, 95%, 96%, 100% { opacity: 0; }
+  90%, 95.5% { opacity: 1; }
+}
+
+@keyframes q-twinkle {
+  0%, 100% {
+    opacity: 0;
+    scale: 0.3;
+    rotate: -15deg;
+  }
+  15% {
+    opacity: 1;
+    scale: 1.1;
+    rotate: 6deg;
+  }
+  30% {
+    opacity: 0.85;
+    scale: 0.95;
+    rotate: 0deg;
+  }
+  50% {
+    opacity: 0;
+    scale: 0.4;
+    rotate: 12deg;
+  }
 }
 
 @keyframes mv-hue {
@@ -2157,15 +2296,24 @@ progress {
 /* ───────── 減少動態 ───────── */
 
 @media (prefers-reduced-motion: reduce) {
+  .mv-q {
+    animation: none;
+    opacity: 0.8;
+  }
+
   .pv-cw,
   .pv-ccw,
   .pv-breathe,
   .star,
+  .mascot__antler,
+  .mascot__pom,
+  .mascot__lid,
+  .mascot__lash,
   .mv-rings,
   .mv-spin,
   .mv-aura,
   .mv-halo,
-  .mv-face img,
+  .mascot,
   .led.is-on,
   .blink {
     animation: none;

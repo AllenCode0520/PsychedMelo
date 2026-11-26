@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useId, useRef } from 'react';
 import { usePlayer } from '@/components/player/PlayerProvider';
 
 const BARS = 56;
@@ -8,6 +8,22 @@ const CENTER = 160;
 const BAR_INNER = 103;
 const BAR_MAX = 34;
 const BAR_COLORS = ['mv-pink', 'mv-teal', 'mv-amber', 'mv-lavender'];
+
+/** 貓鹿旁邊一閃一滅的 Q（座標用 320×320 的視覺座標）。 */
+const SPARKLE_QS = [
+  { x: 262, y: 70, size: 24, delay: 0 },
+  { x: 56, y: 92, size: 17, delay: 1.1 },
+  { x: 284, y: 198, size: 15, delay: 2.3 },
+  { x: 38, y: 212, size: 21, delay: 0.6 },
+  { x: 238, y: 270, size: 18, delay: 1.7 },
+  { x: 92, y: 280, size: 14, delay: 2.9 },
+];
+
+/** 兩隻眼睛在頭像（720×720）上的位置，眼皮蓋在這裡。 */
+const EYES = [
+  { cx: 287, cy: 416 },
+  { cx: 455, cy: 416 },
+];
 
 /** 每根頻譜條的方向，只算一次。 */
 const ANGLES = Array.from({ length: BARS }, (_, i) => (i / BARS) * Math.PI * 2 - Math.PI / 2);
@@ -22,6 +38,7 @@ export function MascotVisual({ playing = true, className = '' }: { playing?: boo
   const rootRef = useRef<HTMLDivElement>(null);
   const barRefs = useRef<(SVGLineElement | null)[]>([]);
   const activeRef = useRef(false);
+  const uid = useId().replace(/:/g, '');
   activeRef.current = playing && audioPlaying;
 
   useEffect(() => {
@@ -132,8 +149,51 @@ export function MascotVisual({ playing = true, className = '' }: { playing?: boo
       </svg>
       <div className="mv-halo" />
       <div className="mv-face">
-        <img src="/brand/mascot.webp" alt="" width={640} height={640} draggable={false} />
+        <div className="mascot">
+          <img className="mascot__base" src="/brand/mascot/base.webp" alt="" width={720} height={720} draggable={false} />
+          <img className="mascot__part mascot__antler mascot__antler--left" src="/brand/mascot/antler-left.webp" alt="" draggable={false} />
+          <img className="mascot__part mascot__antler mascot__antler--right" src="/brand/mascot/antler-right.webp" alt="" draggable={false} />
+          <img className="mascot__part mascot__pom" src="/brand/mascot/pom.webp" alt="" draggable={false} />
+          <svg className="mascot__eyes" viewBox="0 0 720 720" focusable="false">
+            <defs>
+              <linearGradient id={`${uid}-lid`} x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stopColor="#fd6a9b" />
+                <stop offset="1" stopColor="#fb7d8a" />
+              </linearGradient>
+              {EYES.map((eye, i) => (
+                <clipPath key={i} id={`${uid}-eye${i}`}>
+                  <ellipse cx={eye.cx} cy={eye.cy} rx="48" ry="46" />
+                </clipPath>
+              ))}
+            </defs>
+            {EYES.map((eye, i) => (
+              <g key={i}>
+                <g clipPath={`url(#${uid}-eye${i})`}>
+                  <rect className="mascot__lid" x={eye.cx - 50} y={eye.cy - 48} width="100" height="98" fill={`url(#${uid}-lid)`} />
+                </g>
+                <path
+                  className="mascot__lash"
+                  d={`M ${eye.cx - 38} ${eye.cy + 2} Q ${eye.cx} ${eye.cy + 22} ${eye.cx + 38} ${eye.cy + 2}`}
+                />
+              </g>
+            ))}
+          </svg>
+        </div>
       </div>
+      <svg viewBox="0 0 320 320" className="mv-qs" focusable="false">
+        {SPARKLE_QS.map((q, i) => (
+          <text
+            key={i}
+            className={`mv-q mv-q--${i % 4}`}
+            x={q.x}
+            y={q.y}
+            fontSize={q.size}
+            style={{ animationDelay: `${q.delay}s` }}
+          >
+            Q
+          </text>
+        ))}
+      </svg>
     </div>
   );
 }
