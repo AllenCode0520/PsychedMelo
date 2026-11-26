@@ -21,6 +21,11 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
           <li>
             <a href="/feed.xml">RSS</a>
           </li>
+          <li>
+            <a className="site-footer__captain" href="/admin" rel="nofollow">
+              艦長
+            </a>
+          </li>
         </ul>
       </div>
     </footer>

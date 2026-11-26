@@ -516,6 +516,17 @@ input[type='range'] {
   color: var(--amber);
 }
 
+/* 後台入口：刻意低調 */
+.site-footer__captain {
+  opacity: 0.35;
+  font-size: 12px;
+}
+
+.site-footer__captain:hover,
+.site-footer__captain:focus-visible {
+  opacity: 1;
+}
+
 @media (max-width: 720px) {
   .main-nav {
     order: 3;
