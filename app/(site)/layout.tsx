@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 import { SiteFooter } from '@/components/cockpit/SiteFooter';
 import { CrtOverlay } from '@/components/cockpit/CrtOverlay';
+import { CursorStardust } from '@/components/cockpit/CursorStardust';
 import { SiteHeader } from '@/components/cockpit/SiteHeader';
 import { PlayerDock } from '@/components/player/PlayerDock';
 import { PlayerProvider } from '@/components/player/PlayerProvider';
@@ -22,6 +23,7 @@ export default async function SiteLayout({ children }: { children: ReactNode }) 
       </div>
       <PlayerDock />
       <CrtOverlay />
+      <CursorStardust />
     </PlayerProvider>
   );
 }

@@ -1,10 +1,16 @@
 'use client';
 
 import Link from 'next/link';
-import { ExpandIcon, NextIcon, PauseIcon, PlayIcon, PrevIcon, VolumeIcon } from '@/components/cockpit/Icons';
+import { ExpandIcon, NextIcon, PauseIcon, PlayIcon, PrevIcon, RepeatIcon, VolumeIcon } from '@/components/cockpit/Icons';
 import { formatDuration } from '@/lib/format';
 import { ExpandedViewport } from './ExpandedViewport';
 import { usePlayer } from './PlayerProvider';
+
+const REPEAT_LABEL = {
+  off: '重複播放：關閉',
+  all: '重複播放：全部循環',
+  one: '重複播放：單曲循環',
+} as const;
 
 /** 畫面底部的控制台，全站常駐。 */
 export function PlayerDock() {
@@ -48,7 +54,7 @@ export function PlayerDock() {
               type="button"
               className="icon-btn"
               onClick={player.next}
-              disabled={!current || player.index >= player.queue.length - 1}
+              disabled={!current || !player.canNext}
               aria-label="下一首"
             >
               <NextIcon />
@@ -76,6 +82,15 @@ export function PlayerDock() {
           </div>
 
           <div className="dock__extra">
+            <button
+              type="button"
+              className={`icon-btn icon-btn--toggle${player.repeat !== 'off' ? ' is-active' : ''}`}
+              onClick={player.cycleRepeat}
+              aria-label={REPEAT_LABEL[player.repeat]}
+              title={REPEAT_LABEL[player.repeat]}
+            >
+              <RepeatIcon size={18} one={player.repeat === 'one'} />
+            </button>
             <label className="dock__volume">
               <VolumeIcon size={18} />
               <span className="visually-hidden">音量</span>

@@ -72,7 +72,7 @@ export function ExpandedViewport() {
             type="button"
             className="icon-btn"
             onClick={player.next}
-            disabled={player.index >= player.queue.length - 1}
+            disabled={!player.canNext}
             aria-label="下一首"
           >
             <NextIcon />

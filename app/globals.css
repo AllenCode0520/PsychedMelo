@@ -365,6 +365,12 @@ input[type='range'] {
   background: var(--amber-soft);
 }
 
+.icon-btn--toggle.is-active {
+  border-color: var(--amber);
+  color: var(--amber);
+  box-shadow: 0 0 10px rgba(255, 211, 107, 0.35);
+}
+
 .icon-btn--ring {
   border-color: var(--amber-dim);
   background: transparent;
@@ -567,14 +573,64 @@ input[type='range'] {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background-image:
-    radial-gradient(1px 1px at 20% 30%, #fff 50%, transparent 51%),
-    radial-gradient(1px 1px at 75% 20%, #fff 50%, transparent 51%),
-    radial-gradient(1.5px 1.5px at 60% 80%, var(--amber-soft) 50%, transparent 51%),
-    radial-gradient(1px 1px at 35% 70%, var(--teal) 50%, transparent 51%),
-    radial-gradient(1px 1px at 88% 60%, #fff 50%, transparent 51%);
-  background-size: 180px 180px, 240px 240px, 300px 300px, 210px 210px, 160px 160px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 4px currentColor;
+  animation:
+    star-twinkle var(--tw) ease-in-out var(--td) infinite,
+    star-drift var(--dd) ease-in-out var(--ddl) infinite alternate;
+}
+
+/* 比較大的星星加上十字光芒 */
+.star--bright {
+  box-shadow: 0 0 6px currentColor, 0 0 12px currentColor;
+}
+
+.star--bright::before,
+.star--bright::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  background: currentColor;
   opacity: 0.6;
+  translate: -50% -50%;
+}
+
+.star--bright::before {
+  width: 400%;
+  height: 1px;
+}
+
+.star--bright::after {
+  width: 1px;
+  height: 400%;
+}
+
+@keyframes star-twinkle {
+  0%, 100% {
+    opacity: 0.9;
+    scale: 1;
+  }
+  50% {
+    opacity: 0.08;
+    scale: 0.55;
+  }
+}
+
+@keyframes star-drift {
+  from {
+    translate: 0 0;
+  }
+  to {
+    translate: var(--dx) var(--dy);
+  }
 }
 
 .viewport__content {
@@ -688,6 +744,131 @@ input[type='range'] {
   50% {
     transform: scale(0.84);
   }
+}
+
+/* ───────── 舷窗視覺：貓鹿 + 音樂光環 ─────────
+   --bass / --high 由 MascotVisual 每格更新（0~1）。 */
+
+.mv {
+  --bass: 0;
+  --high: 0;
+  position: relative;
+  aspect-ratio: 1;
+  isolation: isolate;
+}
+
+.viewport--wide .mv {
+  height: 86%;
+}
+
+.viewport--round .mv {
+  width: 82%;
+}
+
+.viewport--screen .mv {
+  height: 74%;
+}
+
+.mv-rings {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  animation: mv-hue 18s linear infinite;
+}
+
+.mv-rings circle {
+  fill: none;
+}
+
+.mv-amber { stroke: var(--amber); }
+.mv-teal { stroke: var(--teal); }
+.mv-pink { stroke: var(--pink); }
+.mv-lavender { stroke: var(--lavender); }
+
+.mv-spin {
+  transform-box: view-box;
+  transform-origin: 160px 160px;
+  animation: pv-spin 30s linear infinite;
+}
+
+.mv-spin--reverse {
+  animation-duration: 46s;
+  animation-direction: reverse;
+}
+
+.mv-bars line {
+  filter: drop-shadow(0 0 3px currentColor);
+}
+
+/* 外圈的迷幻光暈：彩虹色盤旋轉，隨低音放大變亮 */
+.mv-aura {
+  position: absolute;
+  inset: 6%;
+  z-index: -1;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #ff9bd6, #b7a6ff, #7fe6d2, #ffd36b, #ff9bd6);
+  filter: blur(38px) saturate(1.4);
+  opacity: calc(0.22 + var(--bass) * 0.45);
+  transform: scale(calc(0.82 + var(--bass) * 0.22));
+  animation: mv-turn 14s linear infinite;
+}
+
+/* 頭像外框：旋轉的彩虹描邊 */
+.mv-halo {
+  position: absolute;
+  inset: 19.5%;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #ff9bd6, #ffd36b, #7fe6d2, #b7a6ff, #ff9bd6);
+  box-shadow: 0 0 calc(12px + var(--bass) * 36px) rgba(255, 155, 214, 0.55);
+  transform: scale(calc(1 + var(--bass) * 0.07));
+  animation: mv-turn 6s linear infinite;
+}
+
+.mv-face {
+  position: absolute;
+  inset: 21%;
+  overflow: hidden;
+  border-radius: 50%;
+  background: #1a1030;
+  transform: scale(calc(1 + var(--bass) * 0.06));
+}
+
+.mv-face img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  user-select: none;
+  /* 跟著高音微微變色，但保留角色原本的樣子 */
+  filter: hue-rotate(calc(var(--high) * 70deg)) saturate(calc(1 + var(--bass) * 0.35));
+  animation: mv-face-drift 22s ease-in-out infinite;
+}
+
+.mv.is-paused .mv-rings,
+.mv.is-paused .mv-spin,
+.mv.is-paused .mv-aura,
+.mv.is-paused .mv-halo,
+.mv.is-paused .mv-face img {
+  animation-play-state: paused;
+}
+
+@keyframes mv-hue {
+  to {
+    filter: hue-rotate(360deg);
+  }
+}
+
+@keyframes mv-turn {
+  to {
+    rotate: 360deg;
+  }
+}
+
+@keyframes mv-face-drift {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -1.5%; }
 }
 
 /* ───────── 首頁主控台 ───────── */
@@ -1962,12 +2143,29 @@ progress {
   }
 }
 
+/* ───────── 滑鼠星塵特效 ───────── */
+
+.cursor-stardust {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
 /* ───────── 減少動態 ───────── */
 
 @media (prefers-reduced-motion: reduce) {
   .pv-cw,
   .pv-ccw,
   .pv-breathe,
+  .star,
+  .mv-rings,
+  .mv-spin,
+  .mv-aura,
+  .mv-halo,
+  .mv-face img,
   .led.is-on,
   .blink {
     animation: none;
